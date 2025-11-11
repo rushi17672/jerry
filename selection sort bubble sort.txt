@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+
+const int MAX = 100;
+
+// Selection Sort
+void selectionSort(float arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        // Swap
+        float temp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = temp;
+    }
+}
+
+// Bubble Sort
+void bubbleSort(float arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] < arr[j + 1]) {
+                // Swap
+                float temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+// Display Top 5 Scores
+void displayTopFive(float arr[], int n) {
+    cout << "Top Five Scores:\n";
+
+    // If less than 5 students, print all
+    int limit = (n < 5) ? n : 5;
+
+    for (int i = 0; i < limit; i++) {
+        cout << arr[i] << endl;
+    }
+}
+
+int main() {
+    int n, choice;
+    float percentage[MAX];
+
+    cout << "Enter number of students: ";
+    cin >> n;
+
+    cout << "Enter percentages:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> percentage[i];
+    }
+
+    do {
+        cout << "\n--- MENU ---\n";
+        cout << "1. Selection Sort and Display Top Five\n";
+        cout << "2. Bubble Sort and Display Top Five\n";
+        cout << "3. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        float sorted[MAX];
+
+        // Copy array to sorted[]
+        for (int i = 0; i < n; i++) {
+            sorted[i] = percentage[i];
+        }
+
+        switch (choice) {
+            case 1:
+                selectionSort(sorted, n);
+                displayTopFive(sorted, n);
+                break;
+
+            case 2:
+                bubbleSort(sorted, n);
+                displayTopFive(sorted, n);
+                break;
+
+            case 3:
+                cout << "Exiting program...\n";
+                break;
+
+            default:
+                cout << "Invalid choice, please try again.\n";
+        }
+
+    } while (choice != 3);
+
+    return 0;
+}

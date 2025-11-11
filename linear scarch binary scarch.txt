@@ -1,0 +1,91 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int roll[50], n, s, ch;
+    bool flag = false;
+
+    cout << "Enter the number of students: ";
+    cin >> n;
+
+    cout << "Enter the roll numbers of students who attended the camp:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> roll[i];
+    }
+
+    do {
+        cout << "\nMenu:\n";
+        cout << "1. Linear Search\n";
+        cout << "2. Binary Search (requires sorted data)\n";
+        cout << "3. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> ch;
+
+        switch (ch) {
+            case 1: {
+                cout << "Enter the roll number to search (Linear Search): ";
+                cin >> s;
+
+                flag = false;
+                for (int i = 0; i < n; i++) {
+                    if (roll[i] == s) {
+                        cout << "Yes, student attended the camp. Position: " << i << endl;
+                        flag = true;
+                        break;
+                    }
+                }
+
+                if (!flag) {
+                    cout << "No, student did NOT attend the camp.\n";
+                }
+                break;
+            }
+
+            case 2: {
+                int sortedRoll[50];
+                for (int i = 0; i < n; i++) {
+                    sortedRoll[i] = roll[i];
+                }
+
+                sort(sortedRoll, sortedRoll + n);
+
+                cout << "Enter the roll number to search (Binary Search): ";
+                cin >> s;
+
+                int low = 0, high = n - 1, mid;
+                flag = false;
+
+                while (low <= high) {
+                    mid = (low + high) / 2;
+
+                    if (sortedRoll[mid] == s) {
+                        cout << "Yes, student attended the camp. Position in sorted list: "
+                             << mid << endl;
+                        flag = true;
+                        break;
+                    } else if (sortedRoll[mid] < s) {
+                        low = mid + 1;
+                    } else {
+                        high = mid - 1;
+                    }
+                }
+
+                if (!flag) {
+                    cout << "No, student did NOT attend the camp.\n";
+                }
+                break;
+            }
+
+            case 3:
+                cout << "Exiting...\n";
+                break;
+
+            default:
+                cout << "Invalid choice, please try again.\n";
+        }
+
+    } while (ch != 3);
+
+    return 0;
+}
