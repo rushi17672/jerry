@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <string.h>
+
+#define SIZE 10
+#define MAX_NAME 100
+
+char queue[SIZE][MAX_NAME];
+int front = 0;
+int rear = -1;
+
+// Function to add a job
+void addJob() {
+    if (rear == SIZE - 1) {
+        printf("Queue is full. Cannot add more jobs.\n");
+        return;
+    }
+
+    char job[MAX_NAME];
+    printf("Enter job name: ");
+    scanf(" %[^\n]", job);  // Read string with spaces
+    rear++;
+    strcpy(queue[rear], job);
+
+    printf("Job added: %s\n", job);
+}
+
+// Function to delete a job
+void deleteJob() {
+    if (front > rear) {
+        printf("Queue is empty. No job to delete.\n");
+        return;
+    }
+
+    printf("Job deleted: %s\n", queue[front]);
+    front++;
+}
+
+// Function to display jobs
+void displayJobs() {
+    if (front > rear) {
+        printf("Queue is empty. No jobs to display.\n");
+        return;
+    }
+
+    printf("Jobs in the queue:\n");
+    for (int i = front; i <= rear; i++) {
+        printf("- %s\n", queue[i]);
+    }
+}
+
+// Main function
+int main() {
+    int choice;
+
+    while (1) {
+        printf("\n--- Job Queue Menu ---\n");
+        printf("1. Add Job\n");
+        printf("2. Delete Job\n");
+        printf("3. Display Jobs\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 1) {
+            addJob();
+        } else if (choice == 2) {
+            deleteJob();
+        } else if (choice == 3) {
+            displayJobs();
+        } else if (choice == 4) {
+            printf("Exiting program.\n");
+            break;
+        } else {
+            printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
